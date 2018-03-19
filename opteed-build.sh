@@ -103,6 +103,8 @@ function build_platform
 		# Copy resulting images to UEFI image dir
 		#
 		TOS_BIN="`$TOOLS_DIR/parse-platforms.py $PLATFORM_CONFIG -p $1 get -o tos_bin`"
+		TOS_BIN_EXTRA1="`$TOOLS_DIR/parse-platforms.py $PLATFORM_CONFIG -p $1 get -o tos_bin_extra1`"
+		TOS_BIN_EXTRA2="`$TOOLS_DIR/parse-platforms.py $PLATFORM_CONFIG -p $1 get -o tos_bin_extra2`"
 	else
 		return 1
 	fi

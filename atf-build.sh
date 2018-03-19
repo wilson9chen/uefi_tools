@@ -67,7 +67,7 @@ function build_platform
 		echo "PLATFORM_BUILDFLAGS=$PLATFORM_BUILDFLAGS"
 	fi
 
-	unset BL30 BL31 BL32 BL33
+	unset BL30 BL31 BL32 BL32_EXTRA1 BL32_EXTRA2 BL33
 	BL30="`$TOOLS_DIR/parse-platforms.py $PLATFORM_CONFIG -p $1 get -o scp_bin`"
 	if [ $ATF_BUILDVER -gt 1 ]; then
 		unset SCP_BL2
@@ -100,8 +100,16 @@ function build_platform
 		SPD="`$TOOLS_DIR/parse-platforms.py $PLATFORM_CONFIG -p $1 get -o atf_spd`"
 
 		TOS_BIN="`$TOOLS_DIR/parse-platforms.py $PLATFORM_CONFIG -p $1 get -o tos_bin`"
+		TOS_BIN_EXTRA1="`$TOOLS_DIR/parse-platforms.py $PLATFORM_CONFIG -p $1 get -o tos_bin_extra1`"
+		TOS_BIN_EXTRA2="`$TOOLS_DIR/parse-platforms.py $PLATFORM_CONFIG -p $1 get -o tos_bin_extra2`"
 		if [ X"$TOS_BIN" != X"" ]; then
 			BL32=$WORKSPACE/Build/$PLATFORM_IMAGE_DIR/$BUILD_PROFILE/FV/$TOS_BIN
+		fi
+		if [ X"$TOS_BIN_EXTRA1" != X"" ]; then
+			BL32_EXTRA1=$WORKSPACE/Build/$PLATFORM_IMAGE_DIR/$BUILD_PROFILE/FV/$TOS_BIN_EXTRA1
+		fi
+		if [ X"$TOS_BIN_EXTRA2" != X"" ]; then
+			BL32_EXTRA2=$WORKSPACE/Build/$PLATFORM_IMAGE_DIR/$BUILD_PROFILE/FV/$TOS_BIN_EXTRA2
 		fi
 
 		if [ X"$SPD" != X"" ] && [ X"$BL32" != X"" ]; then
@@ -149,7 +157,7 @@ function build_platform
 		;;
 	esac
 
-	export BL30 BL31 BL32 BL33
+	export BL30 BL31 BL32 BL32_EXTRA1 BL32_EXTRA2 BL33
 
 	echo "BL30=$BL30"
 	if [ $ATF_BUILDVER -gt 1 ] && [ X"$BL30" != X"" ]; then
@@ -158,6 +166,8 @@ function build_platform
 	fi
 	echo "BL31=$BL31"
 	echo "BL32=$BL32"
+	echo "BL32_EXTRA1=$BL32_EXTRA1"
+	echo "BL32_EXTRA2=$BL32_EXTRA2"
 	echo "BL33=$BL33"
 	echo "$SPD_OPTION"
 	echo "BUILD_TYPE=$BUILD_TYPE"
