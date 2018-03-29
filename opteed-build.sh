@@ -106,6 +106,19 @@ function build_platform
 		TOS_BIN="`$TOOLS_DIR/parse-platforms.py $PLATFORM_CONFIG -p $1 get -o tos_bin`"
 		TOS_BIN_EXTRA1="`$TOOLS_DIR/parse-platforms.py $PLATFORM_CONFIG -p $1 get -o tos_bin_extra1`"
 		TOS_BIN_EXTRA2="`$TOOLS_DIR/parse-platforms.py $PLATFORM_CONFIG -p $1 get -o tos_bin_extra2`"
+		DESTDIR="$EDK2_DIR/Build/$PLATFORM_IMAGE_DIR/$BUILD_PROFILE/FV/"
+		COREDIR="out/$TOS_ARCH-plat-$TOS_PLATFORM/core"
+		if [ $VERBOSE -eq 1 ]; then
+			echo "Copying TOS binaries to '$DESTDIR'"
+			CPFLAGS="-v"
+		else
+			CPFLAGS=""
+		fi
+		for file in $COREDIR/{"$TOS_BIN","$TOS_BIN_EXTRA1","$TOS_BIN_EXTRA2"}; do
+			if [ -f "$file" ]; then
+				cp -a $CPFLAGS $file "$DESTDIR"
+			fi
+		done
 	else
 		return 1
 	fi
