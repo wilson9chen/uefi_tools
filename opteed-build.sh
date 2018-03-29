@@ -21,6 +21,7 @@ function usage
 function build_platform
 {
 	unset CFG_ARM64_core PLATFORM PLATFORM_FLAVOR DEBUG
+	TOS_ARCH="`$TOOLS_DIR/parse-platforms.py $PLATFORM_CONFIG -p $1 get -o tos_arch`"
 	if [ X"$TOS_ARCH" = X"" ]; then
 		TOS_ARCH=arm
 	fi
