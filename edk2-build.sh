@@ -13,6 +13,7 @@ export TOOLS_DIR
 PLATFORM_CONFIG="-c $TOOLS_DIR/edk2-platforms.config"
 ARCH=
 VERBOSE=0                  # Override with -v
+STRICT=0                   # Override with --strict
 ATF_DIR=
 TOS_DIR=
 TOOLCHAIN="gcc"            # Override with -T
@@ -150,6 +151,10 @@ function do_build
 				RESULT=$?
 				popd >/dev/null
 			fi
+		fi
+		if [ $STRICT -eq 1 -a $RESULT -ne 0 ]; then
+		   echo "$PLATFORM_NAME:$target failed to build!"
+		   exit 1
 		fi
 		result_log $RESULT "$PLATFORM_NAME $target"
 	done
@@ -335,6 +340,9 @@ while [ "$1" != "" ]; do
 		-s | --tos-dir)
 			shift
 			export TOS_DIR="`readlink -f $1`"
+			;;
+		--strict) # Exit if any platform/target fails to build
+			STRICT=1
 			;;
 		-T)     # Set specific toolchain tag, or clang/gcc for autoselection
 			shift
