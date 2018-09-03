@@ -21,7 +21,7 @@ WORKSPACE=
 EDK2_DIR=
 PLATFORMS_DIR=
 NON_OSI_DIR=
-IMPORT_OPENSSL=TRUE
+IMPORT_OPENSSL=FALSE
 OPENSSL_CONFIGURED=FALSE
 
 # Number of threads to use for build
@@ -326,8 +326,8 @@ while [ "$1" != "" ]; do
 			usage
 			exit
 			;;
-		--no-openssl)
-			IMPORT_OPENSSL=FALSE
+		--import-openssl)
+			IMPORT_OPENSSL=TRUE
 			;;
 		-n | --non-osi-dir)
 			shift
