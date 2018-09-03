@@ -34,6 +34,22 @@ def get_images():
 
     return False
 
+def get_executables():
+    if args.platform:
+        try:
+            value = config.get(args.platform, "EXEC_FILES")
+            try:
+                arch = config.get(args.platform, "ARCH")
+            except:
+                return False
+
+            print "%s/%s" % (arch, value)
+            return True
+        except:
+            pass
+
+    return False
+
 def get_option():
     if args.platform:
         if args.option:
@@ -70,6 +86,7 @@ platforms = config.sections()
 commands = {"shortlist": shortlist_platforms,
             "list": list_platforms,
             "images": get_images,
+            "executables": get_executables,
             "get": get_option}
 
 try:
