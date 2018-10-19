@@ -27,7 +27,11 @@ function check_atf_buildver
 	MINOR=`grep "^VERSION_MINOR" Makefile | sed 's/.*:= *\([0-9]*\).*/\1/'`
 	[ $? -ne 0 ] && return 1
 
-	if [ "$MAJOR" -eq 1 -a "$MINOR" -ge 2 ]; then
+	if [ "$MAJOR" -eq 1 ]; then
+		if [ "$MINOR" -ge 2 ]; then
+			ATF_BUILDVER=2
+		fi
+	else
 		ATF_BUILDVER=2
 	fi
 }
