@@ -47,8 +47,11 @@ check_reviewed()
 
     reviewed=`git rev-list -n 1 --grep "^Reviewed-by: $REVIEWER\$" "$1^..$1"`
     if [ -z "$reviewed" ]; then
-        echo "$1 missing 'Reviewed-by:'!" >&2
-	return 1
+        reviewed=`git rev-list -n 1 --grep "^Acked-by: $REVIEWER\$" "$1^..$1"`
+        if [ -z "$reviewed" ]; then
+            echo "$1 missing 'Reviewed-by:'!" >&2
+	    return 1
+        fi
     fi
 }
 
