@@ -126,7 +126,7 @@ function build_platform
 
 # Check to see if we are in a trusted OS directory
 # refuse to continue if we aren't
-if [ ! -f documentation/optee_design.md ]
+if [ ! -f core/tee/tee_svc.c ]
 then
 	echo "ERROR: we aren't in the optee_os directory."
 	usage
