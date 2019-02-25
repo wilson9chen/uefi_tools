@@ -52,7 +52,7 @@ function build_platform
 	#
 	# OP-TEE requires both 64- and 32-bit compilers for a 64-bit build
 	# For details, visit
-	# https://github.com/OP-TEE/optee_os/blob/master/documentation/build_system.md#cross_compile-cross-compiler-selection
+	# https://optee.readthedocs.io/building/gits/optee_os.html?#cross-compile
 	#
 	set_cross_compile
 	if [ "$PLATFORM_ARCH" = "AARCH64" ]; then
