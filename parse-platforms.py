@@ -1,36 +1,49 @@
 #!/usr/bin/python
 
-import sys, os, argparse, ConfigParser
+from __future__ import print_function
+
+import sys, os, argparse
+
+try:
+    # try Python 3 configparser module first
+    from configparser import ConfigParser
+except:
+    # fallback to Python 2 ConfigParser
+    try:
+        from ConfigParser import ConfigParser
+    except:
+        print("Unable to load configparser/ConfigParser - exiting!")
+        sys.exit(1)
 
 default_filename='platforms.config'
 
 def list_platforms():
-    for p in platforms: print p
+    for p in platforms: print(p)
 
 def shortlist_platforms():
-    for p in platforms: print p,
+    for p in platforms: print(p, end = ' ')
 
 def get_images():
     if args.platform:
         try:
             value = config.get(args.platform, "EXTRA_FILES")
-            print value,
+            print(value, end = ' ')
         except:
             pass
         try:
             value = config.get(args.platform, "BUILD_ATF")
             if value == "yes":
-                print "bl1.bin fip.bin"
+                print("bl1.bin fip.bin")
                 return True
         except:
             try:
                 value = config.get(args.platform, "UEFI_BIN")
-                print value
+                print(value)
                 return True
             except:
-                print "No images found!"
+                print("No images found!")
     else:
-        print "No platform specified!"
+        print("No platform specified!")
 
     return False
 
@@ -43,7 +56,7 @@ def get_executables():
             except:
                 return False
 
-            print "%s/%s" % (arch, value)
+            print("%s/%s" % (arch, value))
             return True
         except:
             pass
@@ -56,14 +69,14 @@ def get_option():
             try:
                 value = config.get(args.platform, args.option)
                 if value:
-                    print value
+                    print(value)
                     return True
             except:
                 return True   # Option not found, return True, and no output
         else:
-            print "No option specified!"
+            print("No option specified!")
     else:
-        print "No platform specified!"
+        print("No platform specified!")
     return False
 
 parser = argparse.ArgumentParser(description='Parses platform configuration for Linaro UEFI build scripts.')
@@ -78,7 +91,7 @@ if args.config_file:
 else:
     config_filename = os.path.dirname(os.path.realpath(sys.argv[0])) + '/' + default_filename
 
-config = ConfigParser.ConfigParser()
+config = ConfigParser()
 config.read(config_filename)
 
 platforms = config.sections()
@@ -93,6 +106,4 @@ try:
     retval = commands[args.command]()
 except:
     print ("Unrecognized command '%s'" % args.command)
-
-if retval != True:
     sys.exit(1)
