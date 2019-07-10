@@ -221,7 +221,7 @@ function prepare_build
 	if [ $VERBOSE -eq 1 ]; then
 		echo "Building BaseTools"
 	fi
-	make -C BaseTools
+	make -C BaseTools -j $NUM_THREADS
 	RET=$?
 	cd -
 	if [ $RET -ne 0 ]; then
