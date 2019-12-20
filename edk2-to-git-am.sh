@@ -1,5 +1,9 @@
 #!/bin/sh
 #
+# Copyright (c) 2017, Linaro Ltd. All rights reserved.
+#
+# SPDX-License-Identifier: ISC
+#
 # Convert one or more git patches that have had it's CR:s stripped out by SMTP
 # into something th
 

@@ -3,6 +3,10 @@
 #
 # edk2-build.sh: evolution of uefi-build.sh for edk2-platforms
 #
+# Copyright (c) 2012-2019, Linaro Ltd. All rights reserved.
+#
+# SPDX-License-Identifier: ISC
+#
 
 unset MAKEFLAGS  # BaseTools not safe to build parallel, prevent env overrides
 

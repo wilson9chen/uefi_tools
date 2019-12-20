@@ -1,4 +1,9 @@
 #!/usr/bin/python
+#
+# Copyright (c) 2015-2019, Linaro Ltd. All rights reserved.
+#
+# SPDX-License-Identifier: ISC
+#
 
 from __future__ import print_function
 

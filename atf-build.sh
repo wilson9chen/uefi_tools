@@ -7,6 +7,11 @@
 # Board configuration is extracted from
 # parse-platforms.py and platforms.config.
 #
+# Copyright (c) 2014-2018, Linaro Ltd. All rights reserved.
+# Copyright (c) 2017 ARM Ltd. All rights reserved.
+#
+# SPDX-License-Identifier: ISC
+#
 
 . "$TOOLS_DIR"/common-functions
 OUTPUT_DIR="$PWD"/uefi-build

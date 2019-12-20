@@ -1,4 +1,9 @@
 #!/bin/sh
+#
+# Copyright (c) 2018, Linaro Ltd. All rights reserved.
+#
+# SPDX-License-Identifier: ISC
+#
 
 TOOLS_DIR="`dirname $0`"
 TOOLS_DIR="`readlink -f \"$TOOLS_DIR\"`"

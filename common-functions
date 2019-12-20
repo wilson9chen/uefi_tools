@@ -1,4 +1,9 @@
 #!/bin/bash
+#
+# Copyright (c) 2014-2018, Linaro Ltd. All rights reserved.
+#
+# SPDX-License-Identifier: ISC
+#
 
 RESULT_BUF=`echo -e ------------------------------------------------------------`
 RESULT_PASS_COUNT=0
