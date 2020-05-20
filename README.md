@@ -1,0 +1,1 @@
+edk2-platforms.config: add rpi4
