@@ -31,6 +31,26 @@ OPENSSL_CONFIGURED=FALSE
 # Number of threads to use for build
 export NUM_THREADS=$((`getconf _NPROCESSORS_ONLN` + `getconf _NPROCESSORS_ONLN`))
 
+function export_target_txt
+{
+    #echo "build -n $NUM_THREADS -a \"$PLATFORM_ARCH\" -t ${PLATFORM_TOOLCHAIN} -p \"$PLATFORM_DSC\"" \
+    #   "-m \"$COMPONENT_INF\" -b "$target" ${PLATFORM_BUILDFLAGS}"
+
+    OUTPUT_FILE=$CONF_PATH/target.txt
+    BACKUP_FILE=$CONF_PATH/target.bak
+
+    if [ ! -f $BACKUP_FILE ];  then
+        cp  $OUTPUT_FILE  $BACKUP_FILE
+    else
+        cp  $BACKUP_FILE  $OUTPUT_FILE
+    fi
+
+    echo "ACTIVE_PLATFORM       = $PLATFORM_DSC"            >> $OUTPUT_FILE
+    echo "TARGET                = $target"                  >> $OUTPUT_FILE
+    echo "TARGET_ARCH           = $PLATFORM_ARCH"           >> $OUTPUT_FILE
+    echo "TOOL_CHAIN_TAG        = ${PLATFORM_TOOLCHAIN}"    >> $OUTPUT_FILE
+}
+
 function do_build
 {
 	PLATFORM_ARCH=`echo $board | cut -s -d: -f2`
@@ -118,6 +138,7 @@ function do_build
 			eval ${PLATFORM_PREBUILD_CMDS}
 		fi
 
+		export_target_txt
 		if [ -n "$COMPONENT_INF" ]; then
 			# Build a standalone component
 			if [ $VERBOSE -eq 1 ]; then
@@ -412,5 +433,17 @@ fi
 for board in "${builds[@]}" ; do
 	do_build
 done
+
+    TARGET_SCRIPT="target.sh"
+    CROSS_COMPILE_PREFIX="${PLATFORM_TOOLCHAIN}_${PLATFORM_ARCH}_PREFIX"
+
+    echo "export CROSS_COMPILE_PREFIX=$CROSS_COMPILE_PREFIX" > $TARGET_SCRIPT
+    echo "export CROSS_COMPILE=$CROSS_COMPILE"              >> $TARGET_SCRIPT
+    echo "export ACTIVE_PLATFORM=$PLATFORM_DSC"             >> $TARGET_SCRIPT
+    echo "export TARGET=$target"                            >> $TARGET_SCRIPT
+    echo "export TARGET_ARCH=$PLATFORM_ARCH"                >> $TARGET_SCRIPT
+    echo "export TOOL_CHAIN_TAG=${PLATFORM_TOOLCHAIN}"      >> $TARGET_SCRIPT
+    echo "export $CROSS_COMPILE_PREFIX=$CROSS_COMPILE"      >> $TARGET_SCRIPT
+    echo "Toolchain prefix: ${PLATFORM_TOOLCHAIN}_${PLATFORM_ARCH}_PREFIX=$CROSS_COMPILE"
 
 result_print
